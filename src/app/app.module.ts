@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { PatientInfoComponent } from './components/patient-info/patient-info.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     DashboardComponent,
     CreatePatientComponent,
-    PatientInfoComponent
+    PatientInfoComponent,
+    CreateAppointmentComponent
   ],
   imports: [
     BrowserModule,

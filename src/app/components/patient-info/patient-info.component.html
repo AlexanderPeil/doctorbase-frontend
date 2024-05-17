@@ -3,6 +3,13 @@
     <span>{{ patient.firstname }}</span>
     <span>{{ patient.lastname }}</span>
     <span>{{ patient.b_date || 'date: dd-mm-yyyy' }}</span>
-    <span>{{ patient.appointments}}</span>
+    
+    <div class="appointmentContainer" *ngFor="let appointment of patient.appointments">
+        <span>{{ appointment.title }}</span>
+        <span>{{ appointment.description }}</span>
+        <span>{{ appointment.date || 'date: dd-mm-yyyy' }}</span>
+    </div>
+
+    <button mat-raised-button (click)="openDialogAddAppointment(patient.id)" class="addPatientBtn">Add appointment</button>
 
 </div>
