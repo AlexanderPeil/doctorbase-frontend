@@ -1,1 +1,34 @@
-<p>dashboard works!</p>
+<div class="mat-elevation-z8">
+    <mat-form-field appearance="fill" class="inputContainer">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter patients">
+    </mat-form-field>
+
+    <button mat-raised-button (click)="openDialogCreatePatient()" class="addPatientBtn">Add patient</button>
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- Firstname Column -->
+        <ng-container matColumnDef="firstname">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+            <td class="patientContent" (click)="openDialogPatientInfo(patient.id)" mat-cell *matCellDef="let patient">{{patient.firstname}}</td>
+        </ng-container>
+
+        <!-- Lastname Column -->
+        <ng-container matColumnDef="lastname">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+            <td class="patientContent" (click)="openDialogPatientInfo(patient.id)" mat-cell *matCellDef="let patient">{{patient.lastname}}</td>
+        </ng-container>
+
+        <!-- Birth Date Column -->
+        <ng-container matColumnDef="b_date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Birth Date</th>
+            <td class="patientContent" (click)="openDialogPatientInfo(patient.id)" mat-cell *matCellDef="let patient">{{patient.b_date | date}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

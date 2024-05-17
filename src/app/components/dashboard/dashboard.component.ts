@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Patient } from 'src/app/shared/models/patient';
 import { PatientService } from 'src/app/shared/services/patient.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PatientInfoComponent } from '../patient-info/patient-info.component';
+import { CreatePatientComponent } from '../create-patient/create-patient.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private ps: PatientService) { }
+  constructor(
+    private ps: PatientService,
+    private dialog: MatDialog) { }
 
 
   ngOnInit() {
@@ -28,14 +31,44 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       patients => {
         this.dataSource = new MatTableDataSource(patients);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error => {
+        console.error('Error fetching patients:', error);
       }
-    )
+    );
+    this.ps.getPatients();
+  }
+
+  ngAfterViewInit() {
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 
-  ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
+  openDialogCreatePatient() {
+    const dialogRef = this.dialog.open(CreatePatientComponent)
   }
 
+
+  openDialogPatientInfo(patientId: number): void {
+    const dialogRef = this.dialog.open(PatientInfoComponent, {
+      data: { id: patientId }
+    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('Dialog closed', result);
+    // });
+  }
 
 }

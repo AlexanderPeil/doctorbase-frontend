@@ -29,6 +29,12 @@ export class PatientService {
   }
 
 
+  getPatientById(id: number) {
+    const url = `${environment.baseUrl}/patients/${id}`;
+    return this.http.get<Patient>(url)
+  }
+
+
   createPatient(patientData: FormData) {
     const url = `${environment.baseUrl}/patients/`;
     return this.http.post(url, patientData);

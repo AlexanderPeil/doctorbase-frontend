@@ -1,0 +1,8 @@
+<div class="mainContent" *ngIf="patient">
+
+    <span>{{ patient.firstname }}</span>
+    <span>{{ patient.lastname }}</span>
+    <span>{{ patient.b_date || 'date: dd-mm-yyyy' }}</span>
+    <span>{{ patient.appointments}}</span>
+
+</div>
