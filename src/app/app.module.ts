@@ -20,6 +20,11 @@ import { PatientInfoComponent } from './components/patient-info/patient-info.com
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { EditPatientComponent } from './components/edit-patient/edit-patient.component';
+import { DatePipe } from '@angular/common';
+import { DeletePatientComponent } from './components/delete-patient/delete-patient.component';
 
 
 @NgModule({
@@ -30,7 +35,9 @@ import { CreateAppointmentComponent } from './components/create-appointment/crea
     DashboardComponent,
     CreatePatientComponent,
     PatientInfoComponent,
-    CreateAppointmentComponent
+    CreateAppointmentComponent,
+    EditPatientComponent,
+    DeletePatientComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +51,14 @@ import { CreateAppointmentComponent } from './components/create-appointment/crea
     HttpClientModule,
     MatButtonModule,
     MatDialogModule,
-    FormsModule 
+    FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule 
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

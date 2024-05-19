@@ -1,4 +1,4 @@
-<div class="mainContent">
+<div class="mainContent d_flex">
 
     <h1>Add new patient</h1>
 
@@ -11,5 +11,17 @@
         <mat-label>Lastname</mat-label>
         <input [(ngModel)]="patient.lastname" matInput>
     </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Birthdate</mat-label>
+        <input [(ngModel)]="patient.b_date" matInput [matDatepicker]="picker1">
+        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button  mat-button (click)="close()">Cancel</button>
+        <button  mat-button (click)="savePatient()">Save</button>
+    </div>
 
 </div>

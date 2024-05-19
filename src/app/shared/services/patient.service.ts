@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { Patient } from '../models/patient';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
+import { PatientData } from '../interfaces/patient';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +14,6 @@ export class PatientService {
 
 
   constructor(private http: HttpClient) { }
-
-
-  // getPatients(): void {
-  //   const url = `${environment.baseUrl}/patients/`;
-  //   this.http.get<Patient[]>(url).subscribe(
-  //     patientsData => {
-  //       const patientObjects = patientsData.map(data => new Patient(data));
-  //       this.patientsSubject.next(patientObjects);
-  //     },
-  //     error => {
-  //       console.error('Error fetching patients:', error);
-  //     }
-  //   );
-  // }
 
 
   getPatients(): void {
@@ -48,10 +35,42 @@ export class PatientService {
   }
 
 
-  createPatient(patientData: FormData) {
+  createPatient(patientData: PatientData) {
     const url = `${environment.baseUrl}/patients/`;
-    return this.http.post(url, patientData);
+    return this.http.post<Patient>(url, patientData);
   }
 
+
+  addPatient(patient: Patient): void {
+    this.createPatient(patient).subscribe(
+      newPatient => {
+        const currentPatients = this.patientsSubject.value;
+        this.patientsSubject.next([...currentPatients, newPatient]);
+      },
+      error => {
+        console.error('Error adding patient:', error);
+      }
+    );
+  }
+
+
+  updatePatient(patient: Patient): void {
+    const url = `${environment.baseUrl}/patients/${patient.id}/`;
+    this.http.put<Patient>(url, patient).pipe(take(1)).subscribe(
+      updatedPatient => {
+        const currentPatients = this.patientsSubject.value.map(p => p.id === updatedPatient.id ? updatedPatient : p);
+        this.patientsSubject.next(currentPatients);
+      },
+      error => {
+        console.error('Error updating patient:', error);
+      }
+    );
+  }
+
+
+  deletePatient(patientId: number): Observable<void> {
+    const url = `${environment.baseUrl}/patients/${patientId}/`;
+    return this.http.delete<void>(url);
+  }
 
 }

@@ -1,15 +1,28 @@
-<div class="mainContent" *ngIf="patient">
+<div class="mainContent d_flex patientInfoContainer" *ngIf="patient">
 
-    <span>{{ patient.firstname }}</span>
-    <span>{{ patient.lastname }}</span>
-    <span>{{ patient.b_date || 'date: dd-mm-yyyy' }}</span>
-    
-    <div class="appointmentContainer" *ngFor="let appointment of patient.appointments">
-        <span>{{ appointment.title }}</span>
-        <span>{{ appointment.description }}</span>
-        <span>{{ appointment.date || 'date: dd-mm-yyyy' }}</span>
+    <div class="d_flex">
+      <span *ngIf="!editMode" (click)="editMode = true">{{ patient.firstname }}</span>
+      <input *ngIf="editMode" [(ngModel)]="patient.firstname" (blur)="savePatientData()">
+  
+      <span *ngIf="!editMode" (click)="editMode = true">{{ patient.lastname }}</span>
+      <input *ngIf="editMode" [(ngModel)]="patient.lastname" (blur)="savePatientData()">
+  
+      <span *ngIf="!editMode" (click)="editMode = true">{{ patient.b_date | date: 'dd-MM-yyyy' }}</span>
+      <input *ngIf="editMode" [(ngModel)]="patient.b_date" [matDatepicker]="picker1" (dateChange)="onDateChange($event)" (blur)="savePatientData()">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
     </div>
-
+  
+    <div class="d_flex" *ngFor="let appointment of patient.appointments">
+      <span>{{ appointment.title }}</span>
+      <span>{{ appointment.description }}</span>
+      <span>{{ appointment.date | date: 'dd-MM-yyyy' }}</span>
+    </div>
+  
     <button mat-raised-button (click)="openDialogAddAppointment(patient.id)" class="addPatientBtn">Add appointment</button>
-
-</div>
+    <button mat-raised-button (click)="editMode = true" class="addPatientBtn">Edit patient</button>
+    <button mat-raised-button (click)="savePatientData()" class="addPatientBtn">Save patient</button>
+    <button mat-flat-button color="warn" (click)="openDialogDeletePatient(patient.id)">Warn</button>
+  
+  </div>
+  

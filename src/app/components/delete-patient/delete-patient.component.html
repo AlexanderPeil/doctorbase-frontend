@@ -1,0 +1,12 @@
+<div class="mainContent d_flex">
+
+    <h1>Delete patient</h1>
+
+    <span>Do you really want to delete this patient?</span>
+    <span>{{ patient.firstname }}</span>
+    <span>{{ patient.lastname }}</span>
+
+    <button mat-raised-button (click)="close()" class="addPatientBtn">Close</button>
+    <button mat-flat-button color="warn" (click)="deleteCurrentPatient()">Delete</button>
+
+</div>

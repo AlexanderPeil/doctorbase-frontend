@@ -3,17 +3,17 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.mainContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+@mixin gap ($g: 0px) {
+    gap: $g;
 }
 
-.appointmentContainer {
+.d_flex {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.mainContent {
+    padding: 20px;
 }

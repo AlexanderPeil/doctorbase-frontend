@@ -58,17 +58,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   openDialogCreatePatient() {
-    const dialogRef = this.dialog.open(CreatePatientComponent)
+    this.dialog.open(CreatePatientComponent)
   }
 
 
   openDialogPatientInfo(patientId: number): void {
-    const dialogRef = this.dialog.open(PatientInfoComponent, {
+    this.dialog.open(PatientInfoComponent, {
       data: { id: patientId }
     });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('Dialog closed', result);
-    // });
   }
 
 }
