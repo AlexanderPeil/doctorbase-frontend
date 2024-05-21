@@ -61,7 +61,6 @@ export class PatientInfoComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateAppointmentComponent, {
       data: { id: patientId }
     });
-    this.dialogRef.close();
   }
 
 
@@ -75,12 +74,11 @@ export class PatientInfoComponent implements OnInit {
   }
 
 
-  openDialogDeletePatient(patientId: number) {
-    console.log(patientId);
-    
+  openDialogDeletePatient(patientId: number) {    
     this.dialog.open(DeletePatientComponent, {
       data: { id: patientId}
     });
+    this.dialogRef.close();
   }
 
 }

@@ -1,1 +1,35 @@
-<p>create-appointment works!</p>
+<div class="mainContainer d_flex">
+
+    <h1>Appointments</h1>
+
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input [(ngModel)]="appointment.title" matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input [(ngModel)]="appointment.description" matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Date</mat-label>
+        <input [(ngModel)]="appointment.date" matInput [matDatepicker]="picker1">
+        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Doctors</mat-label>
+        <mat-select [(ngModel)]="appointment.doctor">
+            <mat-option *ngFor="let doctor of doctors" [value]="doctor">
+                {{ doctor.title }} {{ doctor.firstname }} {{ doctor.lastname }} - {{ doctor.speciality }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button (click)="addAppointment()">Save appointment</button>
+
+</div>

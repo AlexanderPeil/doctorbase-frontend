@@ -27,6 +27,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+    this.getPatientData();
+    this.ps.getPatients();
+  }
+
+  ngAfterViewInit() {
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+
+  getPatientData() {
     this.ps.patients$.subscribe(
       patients => {
         this.dataSource = new MatTableDataSource(patients);
@@ -37,15 +50,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         console.error('Error fetching patients:', error);
       }
     );
-    this.ps.getPatients();
-  }
-
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  }
+  } 
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

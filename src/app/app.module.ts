@@ -25,6 +25,7 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { EditPatientComponent } from './components/edit-patient/edit-patient.component';
 import { DatePipe } from '@angular/common';
 import { DeletePatientComponent } from './components/delete-patient/delete-patient.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { DeletePatientComponent } from './components/delete-patient/delete-patie
     MatDialogModule,
     FormsModule,
     MatDatepickerModule,
-    MatNativeDateModule 
+    MatNativeDateModule,
+    MatSelectModule 
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
