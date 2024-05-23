@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, Observable, take } from 'rxjs';
 import { Doctor } from '../models/doctor';
 import { environment } from 'src/environments/environment.development';
 import { HttpClient } from '@angular/common/http';
@@ -24,5 +24,11 @@ export class DoctorService {
         console.error(error);
       }
     )
+  }
+
+
+  getDoctorById(id: number):Observable<Doctor> {
+    const url = `${environment.baseUrl}/doctors/`;
+    return this.http.get<Doctor>(url);
   }
 }

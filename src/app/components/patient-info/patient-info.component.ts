@@ -6,6 +6,7 @@ import { CreateAppointmentComponent } from '../create-appointment/create-appoint
 import { EditPatientComponent } from '../edit-patient/edit-patient.component';
 import { DatePipe } from '@angular/common';
 import { DeletePatientComponent } from '../delete-patient/delete-patient.component';
+import { DoctorService } from 'src/app/shared/services/doctor.service';
 
 @Component({
   selector: 'app-patient-info',
@@ -23,6 +24,7 @@ export class PatientInfoComponent implements OnInit {
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ps: PatientService,
+    private ds: DoctorService,
     private datePipe: DatePipe
   ) { }
 
@@ -36,13 +38,13 @@ export class PatientInfoComponent implements OnInit {
     const patientid = this.data.id;
     this.ps.getPatientById(patientid).subscribe(
       patient => {
-        this.patient = patient;
+        this.patient = new Patient(patient);  // Sicherstellen, dass Patient korrekt instanziiert wird
         console.log(this.patient);
       },
       error => {
         console.error(error);
       }
-    )
+    );
   }
 
 

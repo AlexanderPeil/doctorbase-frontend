@@ -11,7 +11,7 @@ export class Appointment {
   date: string;
   created_at: string;
 
-  constructor(obj?: { id: number, doctor: any, patient: any, title: string, description: string, date: string, created_at: string }) {
+  constructor(obj?: any) {
     this.id = obj?.id || 1;
     this.doctor = obj?.doctor ? new Doctor(obj.doctor) : new Doctor();
     this.patient = obj?.patient ? new Patient(obj.patient) : new Patient();
